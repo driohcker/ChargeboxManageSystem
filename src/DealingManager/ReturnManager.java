@@ -5,6 +5,7 @@ import DatabaseConnection.DatabaseConnection;
 import java.sql.*;
 
 public class ReturnManager {
+
 //    int           return_id       归还事务序号
 //    int           rental_id       租用事务序号
 //    Timestamp     return_time     归还时间
@@ -40,4 +41,5 @@ public class ReturnManager {
         pstmt.setInt(1, return_id);
         return pstmt.executeQuery();
     }
+
 }

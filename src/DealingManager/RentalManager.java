@@ -4,6 +4,7 @@ import DatabaseConnection.DatabaseConnection;
 import java.sql.*;
 
 public class RentalManager {
+
 //    int           rental_id       租用事务序号
 //    int           user_id         用户序号
 //    int           powerbank_id    充电宝序号
