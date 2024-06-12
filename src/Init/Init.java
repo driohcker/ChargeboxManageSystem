@@ -78,7 +78,7 @@ public class Init {
         pstmt.executeUpdate();
 
         //插入用户数据
-        
+
     }
 
 }
