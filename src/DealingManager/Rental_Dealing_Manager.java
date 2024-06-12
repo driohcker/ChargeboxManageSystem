@@ -1,4 +1,4 @@
-package RentalManager;
+package DealingManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +10,7 @@ import DatabaseConnection.DatabaseConnection;
  * 此模块实现对事务的操作
  */
 
-public class RentalManager {
+public class Rental_Dealing_Manager {
 
     public void rentPowerBank(int userID, int powerBankID) throws SQLException {
         Connection conn = DatabaseConnection.getConnection();

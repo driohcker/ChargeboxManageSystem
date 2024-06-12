@@ -1,6 +1,5 @@
-import DatabaseConnection.DatabaseConnection;
 import PowerBankTypeManager.PowerBankTypeManager;
-import RentalManager.RentalManager;
+import DealingManager.Rental_Dealing_Manager;
 import UserManager.UserManager;
 import PowerBankManager.PowerBankManager;
 import java.sql.SQLException;
@@ -17,10 +16,10 @@ public class Main {
             PowerBankManager powerBankManager = new PowerBankManager();
             powerBankManager.addPowerBank(1, "Location1", "Available", 100);
 
-            RentalManager rentalManager = new RentalManager();
-            rentalManager.rentPowerBank(1, 1);
-            rentalManager.returnPowerBank(1);
-            rentalManager.settlePayment(1, 10.00);
+            Rental_Dealing_Manager rentalDealingManager = new Rental_Dealing_Manager();
+            rentalDealingManager.rentPowerBank(1, 1);
+            rentalDealingManager.returnPowerBank(1);
+            rentalDealingManager.settlePayment(1, 10.00);
 
         } catch (SQLException e) {
             e.printStackTrace();
