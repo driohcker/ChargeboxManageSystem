@@ -9,9 +9,9 @@ import java.sql.SQLException;
  */
 
 public class DatabaseConnection {
-    private static final String DB_URL = "jdbc:sqlserver://localhost:1433;databaseName=YourDatabase;encrypt=true;trustServerCertificate=true;";
-    private static final String USER = "yourusername";
-    private static final String PASS = "yourpassword";
+    private static final String DB_URL = "jdbc:sqlserver://localhost:1433;databaseName=充电宝租赁系统;encrypt=true;trustServerCertificate=true;";
+    private static final String USER = "sa";
+    private static final String PASS = "Admin123";
     private static Connection connection = null;
 
     private DatabaseConnection() {

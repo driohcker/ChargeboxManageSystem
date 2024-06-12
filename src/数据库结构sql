@@ -1,0 +1,37 @@
+CREATE TABLE Users (
+    UserID INT PRIMARY KEY IDENTITY(1,1),
+    UserName NVARCHAR(50) NOT NULL,
+    Password NVARCHAR(50) NOT NULL,
+    Email NVARCHAR(50) NOT NULL,
+    PhoneNumber NVARCHAR(15) NOT NULL
+);
+
+CREATE TABLE PowerBankTypes (
+    TypeID INT PRIMARY KEY IDENTITY(1,1),
+    TypeName NVARCHAR(50) NOT NULL,
+    Description NVARCHAR(255)
+);
+
+CREATE TABLE PowerBanks (
+    PowerBankID INT PRIMARY KEY IDENTITY(1,1),
+    TypeID INT FOREIGN KEY REFERENCES PowerBankTypes(TypeID),
+    Location NVARCHAR(100) NOT NULL,
+    Status NVARCHAR(20) NOT NULL,
+    BatteryLevel INT NOT NULL
+);
+
+CREATE TABLE Rentals (
+    RentalID INT PRIMARY KEY IDENTITY(1,1),
+    UserID INT FOREIGN KEY REFERENCES Users(UserID),
+    PowerBankID INT FOREIGN KEY REFERENCES PowerBanks(PowerBankID),
+    StartTime DATETIME NOT NULL,
+    EndTime DATETIME NULL,
+    Status NVARCHAR(20) NOT NULL
+);
+
+CREATE TABLE Payments (
+    PaymentID INT PRIMARY KEY IDENTITY(1,1),
+    RentalID INT FOREIGN KEY REFERENCES Rentals(RentalID),
+    Amount DECIMAL(10, 2) NOT NULL,
+    PaymentTime DATETIME NOT NULL
+);
