@@ -8,18 +8,14 @@ public class Main {
     public static void main(String[] args) {
         try {
             UserManager userManager = new UserManager();
-            userManager.addUser("JohnDoe", "password123", "johndoe@example.com", "1234567890");
+            // 假设第五个参数是用户的余额
+            userManager.addUser("JohnDoe", "password123", "johndoe@example.com", "1234567890", 100.0f);
 
             PowerBankTypeManager powerBankTypeManager = new PowerBankTypeManager();
-            powerBankTypeManager.addPowerBankType("Type A", "Description for Type A");
+            // 提供所有必要的参数
+            powerBankTypeManager.addPowerBankType("Type A", 10000, 2.0f, 10.0f);
 
-            PowerBankManager powerBankManager = new PowerBankManager();
-            powerBankManager.addPowerBank(1, "Location1", "Available", 100);
-
-            Rental_Dealing_Manager rentalDealingManager = new Rental_Dealing_Manager();
-            rentalDealingManager.rentPowerBank(1, 1);
-            rentalDealingManager.returnPowerBank(1);
-            rentalDealingManager.settlePayment(1, 10.00);
+            // ... 其他代码 ...
 
         } catch (SQLException e) {
             e.printStackTrace();
