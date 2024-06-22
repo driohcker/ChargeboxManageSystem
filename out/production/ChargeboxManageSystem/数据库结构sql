@@ -1,0 +1,146 @@
+-- 创建数据库
+CREATE DATABASE PowerBankManagement;
+
+-- 使用数据库
+USE PowerBankManagement;
+
+-- 创建充电宝类型表
+CREATE TABLE PowerBankType (
+    type_id INT AUTO_INCREMENT PRIMARY KEY,
+    type_name VARCHAR(50) NOT NULL,
+    capacity INT NOT NULL,
+    price_per_hour DECIMAL(10, 2) NOT NULL,
+    price_per_day DECIMAL(10, 2) NOT NULL
+);
+
+-- 插入充电宝类型数据
+INSERT INTO PowerBankType (type_name, capacity, price_per_hour, price_per_day)
+VALUES 
+('Standard', 10000, 1.50, 15.00),
+('Premium', 20000, 2.50, 25.00),
+('Ultra', 30000, 3.50, 35.00);
+
+-- 创建充电宝表
+CREATE TABLE PowerBank (
+    powerbank_id INT AUTO_INCREMENT PRIMARY KEY,
+    type_id INT,
+    status ENUM('available', 'rented', 'maintenance') DEFAULT 'available',
+    FOREIGN KEY (type_id) REFERENCES PowerBankType(type_id)
+);
+
+-- 插入充电宝数据
+INSERT INTO PowerBank (type_id, status)
+VALUES 
+(1, 'available'),
+(1, 'available'),
+(2, 'available'),
+(3, 'available');
+
+-- 创建用户表
+CREATE TABLE User (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    phone VARCHAR(15) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    balance DECIMAL(10, 2) DEFAULT 0.00
+);
+
+-- 插入用户数据
+INSERT INTO User (username, email, phone, password, balance)
+VALUES 
+('John Doe', 'john@example.com', '1234567890', 'password123', 10.00),
+('Jane Smith', 'jane@example.com', '0987654321', 'password456', 15.00),
+('Alice Johnson', 'alice@example.com', '1231231234', 'password789', 20.00),
+('Bob Williams', 'bob@example.com', '4564564567', 'passwordabc', 25.00),
+('Charlie Brown', 'charlie@example.com', '7897897890', 'passworddef', 30.00),
+('David Lee', 'david@example.com', '9879879876', 'passwordghi', 35.00),
+('Emma Davis', 'emma@example.com', '6546546543', 'passwordjkl', 40.00);
+
+-- 创建租用表
+CREATE TABLE Rental (
+    rental_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    powerbank_id INT,
+    rental_start DATETIME NOT NULL,
+    rental_end DATETIME,
+    FOREIGN KEY (user_id) REFERENCES User(user_id),
+    FOREIGN KEY (powerbank_id) REFERENCES PowerBank(powerbank_id)
+);
+
+-- 创建归还表
+CREATE TABLE Return (
+    return_id INT AUTO_INCREMENT PRIMARY KEY,
+    rental_id INT,
+    return_time DATETIME NOT NULL,
+    FOREIGN KEY (rental_id) REFERENCES Rental(rental_id)
+);
+
+-- 创建费用结算表
+CREATE TABLE Billing (
+    billing_id INT AUTO_INCREMENT PRIMARY KEY,
+    rental_id INT,
+    amount DECIMAL(10, 2) NOT NULL,
+    billing_time DATETIME NOT NULL,
+    FOREIGN KEY (rental_id) REFERENCES Rental(rental_id)
+);
+
+-- 插入租用数据 (示例)
+-- 用户1租用充电宝1
+INSERT INTO Rental (user_id, powerbank_id, rental_start)
+VALUES (1, 1, NOW());
+
+UPDATE PowerBank
+SET status = 'rented'
+WHERE powerbank_id = 1;
+
+-- 插入归还数据 (示例)
+-- 假设 rental_id 是 1
+UPDATE Rental
+SET rental_end = DATE_ADD(NOW(), INTERVAL 5 HOUR)
+WHERE rental_id = 1;
+
+INSERT INTO Return (rental_id, return_time)
+VALUES (1, NOW());
+
+UPDATE PowerBank
+SET status = 'available'
+WHERE powerbank_id = 1;
+
+-- 计算费用并插入到Billing表 (按小时计费和按天计费)
+-- 假设 rental_id 是 1
+INSERT INTO Billing (rental_id, amount, billing_time)
+SELECT 
+    r.rental_id,
+    CASE
+        WHEN TIMESTAMPDIFF(DAY, r.rental_start, r.rental_end) >= 1 THEN 
+            CEIL(TIMESTAMPDIFF(HOUR, r.rental_start, r.rental_end) / 24.0) * pbt.price_per_day
+        ELSE 
+            TIMESTAMPDIFF(HOUR, r.rental_start, r.rental_end) * pbt.price_per_hour
+    END AS amount,
+    NOW()
+FROM Rental r
+JOIN PowerBank pb ON r.powerbank_id = pb.powerbank_id
+JOIN PowerBankType pbt ON pb.type_id = pbt.type_id
+WHERE r.rental_id = 1;
+
+-- 更新用户余额
+UPDATE User
+SET balance = balance - (
+    SELECT amount
+    FROM Billing
+    WHERE rental_id = 1
+)
+WHERE user_id = (
+    SELECT user_id
+    FROM Rental
+    WHERE rental_id = 1
+);
+
+-- 查询所有数据
+SELECT * FROM PowerBankType;
+SELECT * FROM PowerBank;
+SELECT * FROM User;
+SELECT * FROM Rental;
+SELECT * FROM Return;
+SELECT * FROM Billing;
