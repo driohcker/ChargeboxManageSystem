@@ -1,13 +1,17 @@
 package ChargingStationUI2;
+import DatabaseConnection.DatabaseConnection;
 import PowerBankManager.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import DatabaseConnection.*;
 import static PowerBankManager.Status.AVAILABLE;
 
 public class ChargingStationManagementSystem {
@@ -21,7 +25,7 @@ public class ChargingStationManagementSystem {
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
         frame = new JFrame("充电宝租赁管理系统");
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
@@ -49,7 +53,7 @@ public class ChargingStationManagementSystem {
         cardLayout.show(mainPanel, "login");
     }
 
-    private static JPanel createLoginPanel() {
+    private static JPanel createLoginPanel() throws ClassNotFoundException {
         JPanel panel = new JPanel(new GridLayout(3, 2));
         JLabel userLabel = new JLabel("用户名");
         JLabel passwordLabel = new JLabel("密码");
@@ -67,9 +71,24 @@ public class ChargingStationManagementSystem {
         panel.add(loginButton);
         panel.add(registerButton);
 
-        PowerBankManager manager = new PowerBankManager();
+
         try {
-            manager.addPowerBank(1, 2, Status.AVAILABLE);
+            PowerBankManager manager = new PowerBankManager();
+            manager.addPowerBank(1,2, Status.AVAILABLE);
+            ResultSet rs = manager.getPowerBank(1);
+
+            // 展开结果集数据库
+            while (rs.next()) {
+                // 通过字段检索
+                int powerbank_id  = rs.getInt("powerbank_id");
+                int type_id = rs.getInt("type_id");
+                String status = rs.getString("status");
+
+                // 输出数据
+                System.out.print("powerbank_id: " + powerbank_id);
+                System.out.print(", type_id: " + type_id);
+                System.out.println(", status: " + status);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -12,19 +12,18 @@ public class PowerBankManager {
 //    int       type_id         充电表类型序号
 //    String    status          充电表租赁状态
 
-    public void addPowerBank(int powerbank_id, int type_id, Status status) throws SQLException {
+    public void addPowerBank(int powerbank_id, int type_id, Status status) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
-        String sql = "INSERT INTO PowerBank (powerbank_id, type_id, status) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO PowerBank (type_id, status) VALUES (?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setInt(1, powerbank_id);
-        pstmt.setInt(2, type_id);
-        pstmt.setString(3, status.getStatus());
+        pstmt.setInt(1, type_id);
+        pstmt.setString(2, status.getStatus());
         pstmt.executeUpdate();
     }
 
-    public void updatePowerBank(int powerbank_id, int type_id, Status status) throws SQLException {
+    public void updatePowerBank(int powerbank_id, int type_id, Status status) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
-        String sql = "UPDATE PowerBank SET type_id=?, status=? WHERE PowerBankID=?";
+        String sql = "UPDATE PowerBank SET type_id=?, status=? WHERE powerbank_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, type_id);
         pstmt.setString(2, status.getStatus());
@@ -32,7 +31,7 @@ public class PowerBankManager {
         pstmt.executeUpdate();
     }
 
-    public void deletePowerBank(int powerbank_id) throws SQLException {
+    public void deletePowerBank(int powerbank_id) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         String sql = "DELETE FROM PowerBank WHERE powerbank_id";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -40,7 +39,7 @@ public class PowerBankManager {
         pstmt.executeUpdate();
     }
 
-    public ResultSet getPowerBank(int powerbank_id) throws SQLException {
+    public ResultSet getPowerBank(int powerbank_id) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         String sql = "SELECT * FROM PowerBank WHERE powerbank_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);

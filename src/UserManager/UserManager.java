@@ -19,7 +19,7 @@ public class UserManager {
 //    String    phone       用户电话
 //    float     balance     用户余额
 
-    public void addUser(String username, String password, String email, String phone, float balance) throws SQLException {
+    public void addUser(String username, String password, String email, String phone, float balance) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         String sql = "INSERT INTO User (username, password, email, phone, balanece) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -31,7 +31,7 @@ public class UserManager {
         pstmt.executeUpdate();
     }
 
-    public void updateUser(int user_id, String username, String password, String email, String phone, float balance) throws SQLException {
+    public void updateUser(int user_id, String username, String password, String email, String phone, float balance) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         String sql = "UPDATE User SET username=?, password=?, email=?, phone=? WHERE user_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -44,7 +44,7 @@ public class UserManager {
         pstmt.executeUpdate();
     }
 
-    public void deleteUser(int user_id) throws SQLException {
+    public void deleteUser(int user_id) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         String sql = "DELETE FROM User WHERE user_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -52,7 +52,7 @@ public class UserManager {
         pstmt.executeUpdate();
     }
 
-    public ResultSet getUser(int user_id) throws SQLException {
+    public ResultSet getUser(int user_id) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         String sql = "SELECT * FROM User WHERE user_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);

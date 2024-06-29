@@ -18,7 +18,7 @@ public class PowerBankTypeManager {
 //    float     price_per_hour  价格（每小时租用价格）
 //    float     price_per_day   价格（每天租用价格）
 
-    public void addPowerBankType(String type_name, int capacity, float price_per_hour,float price_per_day) throws SQLException {
+    public void addPowerBankType(String type_name, int capacity, float price_per_hour,float price_per_day) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         String sql = "INSERT INTO PowerBankType (type_name,capacity,price_per_hour,price_per_day) VALUES (?, ?, ?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -29,7 +29,7 @@ public class PowerBankTypeManager {
         pstmt.executeUpdate();
     }
 
-    public void updatePowerBankType(int type_id, String type_name, int capacity, float price_per_hour, float price_per_day) throws SQLException {
+    public void updatePowerBankType(int type_id, String type_name, int capacity, float price_per_hour, float price_per_day) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         String sql = "UPDATE PowerBankType SET type_name=?, capacity=?, price_per_hour=? ,price_per_day=? WHERE TypeID=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -41,7 +41,7 @@ public class PowerBankTypeManager {
         pstmt.executeUpdate();
     }
 
-    public void deletePowerBankType(int type_id) throws SQLException {
+    public void deletePowerBankType(int type_id) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         String sql = "DELETE FROM PowerBankType WHERE TypeID=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -49,7 +49,7 @@ public class PowerBankTypeManager {
         pstmt.executeUpdate();
     }
 
-    public ResultSet getPowerBankType(int type_id) throws SQLException {
+    public ResultSet getPowerBankType(int type_id) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         String sql = "SELECT * FROM PowerBankType WHERE Type_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);

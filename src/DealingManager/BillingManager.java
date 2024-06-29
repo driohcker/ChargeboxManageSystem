@@ -12,7 +12,7 @@ public class BillingManager {
 //    BigDecimal    amount
 //    Timestamp     billing_time    费用结算事务结算时间
 
-    public void addBilling(int rental_id, BigDecimal amount, Timestamp billing_time) throws SQLException {
+    public void addBilling(int rental_id, BigDecimal amount, Timestamp billing_time) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         String sql = "INSERT INTO Billing (rental_id, amount, billing_time) VALUES (?, ?, NOW())";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -21,7 +21,7 @@ public class BillingManager {
         //pstmt.setTimestamp(3, billing_time);
         pstmt.executeUpdate();
     }
-    public void updateBilling(int billing_id,int rental_id,BigDecimal amount, Timestamp billing_time) throws SQLException{
+    public void updateBilling(int billing_id,int rental_id,BigDecimal amount, Timestamp billing_time) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         String sql = "UPDATE Rental SET rental_id=?, amount=?, billing_time=? WHERE billing_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -31,14 +31,14 @@ public class BillingManager {
         pstmt.setInt(4, billing_id);
         pstmt.executeUpdate();
     }
-    public void deleteBilling(int billing_id) throws SQLException{
+    public void deleteBilling(int billing_id) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         String sql = "DELETE FROM Billing WHERE billing_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, billing_id);
         pstmt.executeUpdate();
     }
-    public ResultSet getBilling(int billing_id) throws SQLException{
+    public ResultSet getBilling(int billing_id) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         String sql = "SELECT * FROM Billing WHERE billing_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);

@@ -12,7 +12,7 @@ import DatabaseConnection.DatabaseConnection;
 
 public class Rental_Dealing_Manager {
 
-    public void rentPowerBank(int userID, int powerBankID) throws SQLException {
+    public void rentPowerBank(int userID, int powerBankID) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         conn.setAutoCommit(false); // 开始事务
 
@@ -39,7 +39,7 @@ public class Rental_Dealing_Manager {
         }
     }
 
-    public void returnPowerBank(int rentalID) throws SQLException {
+    public void returnPowerBank(int rentalID) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         conn.setAutoCommit(false); // 开始事务
 
@@ -75,7 +75,7 @@ public class Rental_Dealing_Manager {
         }
     }
 
-    public void settlePayment(int rentalID, double amount) throws SQLException {
+    public void settlePayment(int rentalID, double amount) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         String sql = "INSERT INTO Payments (RentalID, Amount, PaymentTime) VALUES (?, ?, GETDATE())";
         PreparedStatement pstmt = conn.prepareStatement(sql);

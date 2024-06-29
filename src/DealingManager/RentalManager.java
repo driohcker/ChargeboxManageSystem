@@ -11,7 +11,7 @@ public class RentalManager {
 //    Timestamp     rental_start    租用开始时间
 //    Timestamp     rental_end      租用结束时间
 
-    public void addRental(int user_id, int powerbank_id, Timestamp rental_start) throws SQLException {
+    public void addRental(int user_id, int powerbank_id, Timestamp rental_start) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         String sql = "INSERT INTO Rental (user_id, powerbank_id, rental_start, rental_end) VALUES (?, ?, ?, NOW())";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -21,7 +21,7 @@ public class RentalManager {
         //pstmt.setTimestamp(3, rental_end);
         pstmt.executeUpdate();
     }
-    public void updateRental(int rental_id, int user_id, int powerbank_id, Timestamp rental_start, Timestamp rental_end) throws SQLException{
+    public void updateRental(int rental_id, int user_id, int powerbank_id, Timestamp rental_start, Timestamp rental_end) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         String sql = "UPDATE Rental SET user_id=?, powerbank_id=?, rental_start=?, rental_end WHERE rental_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -31,14 +31,14 @@ public class RentalManager {
         pstmt.setTimestamp(4, rental_end);
         pstmt.executeUpdate();
     }
-    public void deleteRental(int rental_id) throws SQLException{
+    public void deleteRental(int rental_id) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         String sql = "DELETE FROM Rental WHERE rental_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, rental_id);
         pstmt.executeUpdate();
     }
-    public ResultSet getRental(int rental_id) throws SQLException{
+    public ResultSet getRental(int rental_id) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
         String sql = "SELECT * FROM Rental WHERE rental_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
