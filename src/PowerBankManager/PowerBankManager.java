@@ -13,8 +13,8 @@ public class PowerBankManager {
 //    int       powerbank_id    充电宝id
 
 //    int       type_id         充电表类型id
-//    int       capacity_left   充电宝电量
 //    String    status          充电表租赁状态
+//    int       capacity_left   充电宝电量
 
 
     //增加充电宝数据
