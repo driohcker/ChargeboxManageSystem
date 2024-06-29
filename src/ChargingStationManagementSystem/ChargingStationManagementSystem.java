@@ -28,6 +28,7 @@ public class ChargingStationManagementSystem {
     private static ChargingStationManager manager = new ChargingStationManager(); // 全局的manager
     private static PowerBankManager manager1 = new  PowerBankManager();
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
+
         frame = new JFrame("充电宝租赁管理系统");
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
@@ -50,7 +51,8 @@ public class ChargingStationManagementSystem {
 
 
 
-        manager1.addPowerBank(1, 92, Status.AVAILABLE);
+        //manager1.addPowerBank(1, 92, Status.AVAILABLE);
+        System.out.println(manager1.getPowerbankData(13,"capacity_left"));
 
 
 
@@ -343,160 +345,3 @@ public class ChargingStationManagementSystem {
     }
 }
 
-class PowerBankType {
-    private String type;
-    private double rentalPrice;
-
-    public PowerBankType(String type, double rentalPrice) {
-        this.type = type;
-        this.rentalPrice = rentalPrice;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public double getRentalPrice() {
-        return rentalPrice;
-    }
-}
-
-class PowerBank {
-    private String id;
-    private PowerBankType type;
-    private boolean isRented;
-
-    public PowerBank(String id, PowerBankType type) {
-        this.id = id;
-        this.type = type;
-        this.isRented = false;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public PowerBankType getType() {
-        return type;
-    }
-
-    public boolean isRented() {
-        return isRented;
-    }
-
-    public void setRented(boolean rented) {
-        isRented = rented;
-    }
-}
-
-class User {
-    private String username;
-    private String password;
-    private List<PowerBank> rentedPowerBanks;
-
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-        this.rentedPowerBanks = new ArrayList<>();
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public List<PowerBank> getRentedPowerBanks() {
-        return rentedPowerBanks;
-    }
-}
-
-class ChargingStationManager {
-    private Map<String, PowerBankType> powerBankTypes;
-    private Map<String, PowerBank> powerBanks;
-    private Map<String, User> users;
-
-    public ChargingStationManager() {
-        powerBankTypes = new HashMap<>();
-        powerBanks = new HashMap<>();
-        users = new HashMap<>();
-    }
-
-    // 添加充电宝类型
-    public void addPowerBankType(String type, double rentalPrice) {
-        powerBankTypes.put(type, new PowerBankType(type, rentalPrice));
-    }
-
-    // 添加充电宝
-    public void addPowerBank(String id, String type) {
-        if (powerBankTypes.containsKey(type)) {
-            powerBanks.put(id, new PowerBank(id, powerBankTypes.get(type)));
-        }
-    }
-
-    // 注册用户
-    public void registerUser(String username, String password) {
-        users.put(username, new User(username, password));
-    }
-
-    // 获取用户信息
-    public User getUser(String username) {
-        return users.get(username);
-    }
-
-    // 租用充电宝
-    public boolean rentPowerBank(String username, String powerBankId) {
-        User user = users.get(username);
-        PowerBank powerBank = powerBanks.get(powerBankId);
-
-        if (user != null && powerBank != null && !powerBank.isRented()) {
-            user.getRentedPowerBanks().add(powerBank);
-            powerBank.setRented(true);
-            return true;
-        }
-        return false;
-    }
-
-    // 归还充电宝
-    public boolean returnPowerBank(String username, String powerBankId) {
-        User user = users.get(username);
-        PowerBank powerBank = powerBanks.get(powerBankId);
-
-        if (user != null && powerBank != null && powerBank.isRented() && user.getRentedPowerBanks().remove(powerBank)) {
-            powerBank.setRented(false);
-            return true;
-        }
-        return false;
-    }
-
-    // 计算费用
-    public double calculateFee(String username) {
-        User user = users.get(username);
-        if (user != null) {
-            return user.getRentedPowerBanks().stream().mapToDouble(pb -> pb.getType().getRentalPrice()).sum();
-        }
-        return 0;
-    }
-
-    // 获取可租用充电宝列表
-    public List<PowerBank> getAvailablePowerBanks() {
-        List<PowerBank> availablePowerBanks = new ArrayList<>();
-        for (PowerBank pb : powerBanks.values()) {
-            if (!pb.isRented()) {
-                availablePowerBanks.add(pb);
-            }
-        }
-        return availablePowerBanks;
-    }
-
-    // 获取用户租用的充电宝列表
-    public List<PowerBank> getUserPowerBanks(String username) {
-        User user = users.get(username);
-        if (user != null) {
-            return new ArrayList<>(user.getRentedPowerBanks());
-        }
-        return new ArrayList<>();
-    }
-}

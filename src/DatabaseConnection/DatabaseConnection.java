@@ -10,7 +10,7 @@ import java.sql.SQLException;
  */
 
 public class DatabaseConnection {
-    private static final String DB_URL = "jdbc:sqlserver://localhost:1433;databaseName=LAPTOP-44O4D4LI;encrypt=true;trustServerCertificate=true;";
+    private static final String DB_URL = "jdbc:sqlserver://localhost:1433;databaseName=PowerBankManagement;encrypt=true;trustServerCertificate=true;";
     private static final String USER = "sa";
     private static final String PASS = "Admin123";
     private static Connection connection = null;

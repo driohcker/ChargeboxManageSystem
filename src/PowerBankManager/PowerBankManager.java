@@ -20,10 +20,11 @@ public class PowerBankManager {
     //增加充电宝数据
     public void addPowerBank(int type_id, int capacity_left, Status status) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
-        String sql = "INSERT INTO PowerBank (type_id, status) VALUES (?, ?)";
+        String sql = "INSERT INTO PowerBank (type_id, capacity_left, status) VALUES (?, ?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, type_id);
-        pstmt.setString(2, status.getStatus());
+        pstmt.setInt(2, capacity_left);
+        pstmt.setString(3, status.getStatus());
         pstmt.executeUpdate();
     }
 
@@ -77,4 +78,19 @@ public class PowerBankManager {
         pstmt.setInt(1, powerbank_id);
         return pstmt.executeQuery();
     }
+
+    public String getPowerbankData(int powerbank_id, String dataName) throws SQLException, ClassNotFoundException {
+        Connection conn = DatabaseConnection.getConnection();
+        String sql = "SELECT " + dataName + " FROM PowerBank WHERE powerbank_id=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, powerbank_id);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (rs.next()) {
+            return rs.getString(1); // assuming the column data is of type String
+        } else {
+            return null; // or throw an exception if the powerbank_id is not found
+        }
+    }
+
 }
