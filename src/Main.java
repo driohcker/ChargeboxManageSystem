@@ -1,12 +1,22 @@
 import javax.swing.*;
 import java.awt.*;
-import UI.LoginUI;
+import java.sql.ResultSet;
+
+import UI.*;
+
 public class Main {
     private static JFrame frame;
     private static CardLayout cardLayout;
     private static JPanel mainPanel;
-    private static LoginUI loginUI = new LoginUI();
 
+    private static LoginUI loginUI = new LoginUI();
+    private static RegisterUI registerUI = new RegisterUI();
+    private static MainUI mainUI = new MainUI();
+    private static RentalUI rentalUI = new RentalUI();
+    private static ReturnUI returnUI = new ReturnUI();
+    private static UserUI userUI = new UserUI();
+    private static BillingUI billingUI = new BillingUI();
+    private static BillingInfoUI billingInfoUI = new BillingInfoUI();
 
     public static void main(String[] args) {
 
@@ -15,9 +25,9 @@ public class Main {
         mainPanel = new JPanel(cardLayout);
 
         // 添加登录和注册界面
-        mainPanel.add(loginUI.createLoginUI(), "login");
-        //mainPanel.add(createRegisterPanel(), "register");
-
+        mainPanel.add(loginUI.createLoginUI(cardLayout,mainPanel), "login");
+        mainPanel.add(registerUI.createRegisterUI(), "register");
+        mainPanel.add(mainUI.createMainUI(),"main");
         // 添加主管理界面
         //mainPanel.add(createManagementPanel(), "management");
 
@@ -26,11 +36,11 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
-        //manager1.addPowerBank(1, 92, Status.AVAILABLE);
-        //System.out.println(manager1.getPowerbankData(13,"capacity_left"));
-
 
         // 显示登录界面
         cardLayout.show(mainPanel, "login");
+        //cardLayout.show(mainPanel,"register");
+
+
     }
 }
