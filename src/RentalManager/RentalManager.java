@@ -9,31 +9,34 @@ public class RentalManager {
 
 //    int           user_id         用户id
 //    int           powerbank_id    充电宝id
-//    String        powerbank_type  充电宝类型
 //    Timestamp     rental_start    租用开始时间
+//    String        type_name       充电宝类型
 //    float         price_per_hour  每小时价格
 
 
     //添加租借数据,时间为现在
-    public void addRental(int user_id, int powerbank_id) throws SQLException, ClassNotFoundException {
+    public void addRental(int user_id, int powerbank_id, String type_name, float price_per_hour) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
-        String sql = "INSERT INTO Rental (user_id, powerbank_id, rental_start, rental_end) VALUES (?, ?, NOW())";
+        String sql = "INSERT INTO Rental (user_id, powerbank_id, type_name, rental_start, price_per_hour) VALUES (?, ?, ?, NOW(), ?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, user_id);
         pstmt.setInt(2,powerbank_id);
+        pstmt.setString(3,type_name);
+        pstmt.setFloat(4,price_per_hour);
         pstmt.executeUpdate();
     }
 
     //更新租借全部数据
-    public void updateRentalAll(int rental_id, int user_id, int powerbank_id, String powerbank_type, Timestamp rental_start, float price_per_hour) throws SQLException, ClassNotFoundException {
+    public void updateRentalAll(int rental_id, int user_id, int powerbank_id, String type_name, Timestamp rental_start, float price_per_hour) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
-        String sql = "UPDATE Rental SET user_id=?, powerbank_id=?, rental_start=?, price_per_hour WHERE rental_id=?";
+        String sql = "UPDATE Rental SET user_id=?, powerbank_id=?, type_name=?, rental_start=?, price_per_hour=? WHERE rental_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, user_id);
         pstmt.setInt(2,powerbank_id);
-        pstmt.setTimestamp(3, rental_start);
-        pstmt.setFloat(4, price_per_hour);
-        pstmt.setInt(5, rental_id);
+        pstmt.setString(3,type_name);
+        pstmt.setTimestamp(4, rental_start);
+        pstmt.setFloat(5, price_per_hour);
+        pstmt.setInt(6, rental_id);
         pstmt.executeUpdate();
     }
 

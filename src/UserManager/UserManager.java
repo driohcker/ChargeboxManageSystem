@@ -11,7 +11,7 @@ import DatabaseConnection.DatabaseConnection;
  */
 
 public class UserManager {
-//    用户表
+//    用户表     Users
 //    int       user_id     用户id
 
 //    String    username    用户名
@@ -24,7 +24,7 @@ public class UserManager {
     //添加用户
     public void addUser(String username, String password, String email, String phone, float balance) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
-        String sql = "INSERT INTO User (username, password, email, phone, balanece) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Users (username, password, email, phone, balanece) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, username);
         pstmt.setString(2, password);
@@ -37,7 +37,7 @@ public class UserManager {
     //一次性更新所有数据
     public void updateUserAll(int user_id, String username, String password, String email, String phone, float balance) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
-        String sql = "UPDATE User SET username=?, password=?, email=?, phone=?, balance=? WHERE user_id=?";
+        String sql = "UPDATE Users SET username=?, password=?, email=?, phone=?, balance=? WHERE user_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, username);
         pstmt.setString(2, password);
@@ -51,7 +51,7 @@ public class UserManager {
     //更新用户名数据
     public void updateUserUsername(int user_id, String username) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
-        String sql = "UPDATE User SET username=? WHERE user_id=?";
+        String sql = "UPDATE Users SET username=? WHERE user_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, username);
         pstmt.setInt(2, user_id);
@@ -61,7 +61,7 @@ public class UserManager {
     //更新密码数据
     public void updateUserPassword(int user_id, String password) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
-        String sql = "UPDATE User SET password=? WHERE user_id=?";
+        String sql = "UPDATE Users SET password=? WHERE user_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, password);
         pstmt.setInt(2, user_id);
@@ -71,7 +71,7 @@ public class UserManager {
     //更新Email数据
     public void updateUserEmail(int user_id, String email) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
-        String sql = "UPDATE User SET email=? WHERE user_id=?";
+        String sql = "UPDATE Users SET email=? WHERE user_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, email);
         pstmt.setInt(2, user_id);
@@ -81,7 +81,7 @@ public class UserManager {
     //更新Phone数据
     public void updateUserPhone(int user_id, String phone) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
-        String sql = "UPDATE User SET phone=? WHERE user_id=?";
+        String sql = "UPDATE Users SET phone=? WHERE user_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, phone);
         pstmt.setInt(2, user_id);
@@ -101,7 +101,7 @@ public class UserManager {
     //删除用户
     public void deleteUser(int user_id) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
-        String sql = "DELETE FROM User WHERE user_id=?";
+        String sql = "DELETE FROM Users WHERE user_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, user_id);
         pstmt.executeUpdate();
@@ -110,7 +110,7 @@ public class UserManager {
     //输入用户id查询所有数据
     public ResultSet getUser(int user_id) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
-        String sql = "SELECT * FROM User WHERE user_id=?";
+        String sql = "SELECT * FROM Users WHERE user_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, user_id);
         return pstmt.executeQuery();
@@ -119,7 +119,7 @@ public class UserManager {
     //输入用户id和数据列名查找该数据
     public String getUserData(int user_id, String dataName) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
-        String sql = "SELECT ? FROM User WHERE user_id=?";
+        String sql = "SELECT ? FROM Users WHERE user_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1,dataName);
         pstmt.setInt(2, user_id);

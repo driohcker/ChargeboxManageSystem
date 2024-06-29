@@ -14,7 +14,7 @@ public class PowerBankTypeManager {
 //    充电宝类型表
 //    int       type_id         充电宝类型id
 
-//    String    powerbank_type  充电宝类型名
+//    String    type_name       充电宝类型名
 //    int       capacity        容量
 //    float     price_per_hour  价格（每小时租用价格）
 
