@@ -6,6 +6,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainUI {
+
+    public CardLayout cardLayout;
+    public JPanel mainPanel;
+
+    private static RentalUI rentalUI = new RentalUI();
+    private static ReturnUI returnUI = new ReturnUI();
+    private static BillingUI billingUI = new BillingUI();
+    private static UserUI userUI = new UserUI();
+
+
     public JPanel createMainUI(){
         JPanel panel = new JPanel(new GridLayout(3, 2));
         JButton rentPowerBankButton = new JButton("租用充电宝");
