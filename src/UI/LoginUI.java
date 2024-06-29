@@ -41,4 +41,7 @@ public class LoginUI {
         return panel;
     }
 
+    public static void main(String[] args) {
+        new LoginUI().createLoginUI();
+    }
 }
