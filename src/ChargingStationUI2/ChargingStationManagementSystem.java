@@ -1,10 +1,12 @@
 package ChargingStationUI2;
 import PowerBankManager.*;
+import PowerBankTypeManager.PowerBankTypeManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,12 +69,16 @@ public class ChargingStationManagementSystem {
         panel.add(loginButton);
         panel.add(registerButton);
 
+
         PowerBankManager manager = new PowerBankManager();
         try {
             manager.addPowerBank(1, 2, Status.AVAILABLE);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+
+
 
 
         loginButton.addActionListener(new ActionListener() {
