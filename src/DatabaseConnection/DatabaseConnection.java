@@ -2,6 +2,7 @@ package DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
@@ -14,13 +15,14 @@ public class DatabaseConnection {
     private static final String PASS = "Admin123";
     private static Connection connection = null;
 
-    private DatabaseConnection() {
+    public DatabaseConnection() throws SQLException, ClassNotFoundException {
     }
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException, ClassNotFoundException {
         if (connection == null || connection.isClosed()) {
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
         }
         return connection;
     }
+
 }

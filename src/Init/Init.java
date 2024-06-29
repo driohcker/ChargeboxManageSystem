@@ -1,16 +1,13 @@
 package Init;
 
 import DatabaseConnection.*;
-import DealingManager.*;
-import PowerBankManager.*;
-import UserManager.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Init {
-    public void initDatabase() throws SQLException {
+    public void initDatabase() throws SQLException, ClassNotFoundException {
         // 初始化数据库连接
         Connection connection = DatabaseConnection.getConnection();
 

@@ -11,47 +11,50 @@ import DatabaseConnection.DatabaseConnection;
  */
 
 public class PowerBankTypeManager {
+//    充电宝类型表
+//    int       type_id         充电宝类型id
 
-//    int       type_id         类型序号
-//    String    type_name       类型名
-//    int       capacity        电量
+//    String    powerbank_type  充电宝类型名
+//    int       capacity        容量
 //    float     price_per_hour  价格（每小时租用价格）
-//    float     price_per_day   价格（每天租用价格）
 
-    public void addPowerBankType(String type_name, int capacity, float price_per_hour,float price_per_day) throws SQLException {
+
+    //增加充电宝类型方法
+    public void addPowerBankType(String powerbank_type, int capacity, float price_per_hour) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
-        String sql = "INSERT INTO PowerBankType (type_name,capacity,price_per_hour,price_per_day) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO PowerBankType (powerbank_type, capacity, price_per_hour) VALUES (?, ?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, type_name);
+        pstmt.setString(1, powerbank_type);
         pstmt.setInt(2, capacity);
         pstmt.setFloat(3, price_per_hour);
-        pstmt.setFloat(4, price_per_day);
         pstmt.executeUpdate();
     }
 
-    public void updatePowerBankType(int type_id, String type_name, int capacity, float price_per_hour, float price_per_day) throws SQLException {
+    //更新充电宝类型全部数据
+    public void updatePowerBankType(int type_id, String powerbank_type, int capacity, float price_per_hour) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
-        String sql = "UPDATE PowerBankType SET type_name=?, capacity=?, price_per_hour=? ,price_per_day=? WHERE TypeID=?";
+        String sql = "UPDATE PowerBankType SET powerbank_type=?, capacity=?, price_per_hour=? WHERE type_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, type_name);
+        pstmt.setString(1, powerbank_type);
         pstmt.setInt(2, capacity);
         pstmt.setFloat(3, price_per_hour);
-        pstmt.setFloat(4,price_per_day);
-        pstmt.setInt(5,type_id);
+        pstmt.setInt(4,type_id);
         pstmt.executeUpdate();
     }
 
-    public void deletePowerBankType(int type_id) throws SQLException {
+    //删除充电宝类型数据
+    public void deletePowerBankType(int type_id) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
-        String sql = "DELETE FROM PowerBankType WHERE TypeID=?";
+        String sql = "DELETE FROM PowerBankType WHERE type_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, type_id);
         pstmt.executeUpdate();
     }
 
-    public ResultSet getPowerBankType(int type_id) throws SQLException {
+    //获取充电宝类型数据
+    public ResultSet getPowerBankType(int type_id) throws SQLException, ClassNotFoundException {
         Connection conn = DatabaseConnection.getConnection();
-        String sql = "SELECT * FROM PowerBankType WHERE Type_id=?";
+        String sql = "SELECT * FROM PowerBankType WHERE type_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, type_id);
         return pstmt.executeQuery();

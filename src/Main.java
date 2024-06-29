@@ -1,11 +1,10 @@
 import PowerBankTypeManager.PowerBankTypeManager;
-import DealingManager.Rental_Dealing_Manager;
 import UserManager.UserManager;
-import PowerBankManager.PowerBankManager;
+
 import java.sql.SQLException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
         try {
             UserManager userManager = new UserManager();
             // 假设第五个参数是用户的余额
