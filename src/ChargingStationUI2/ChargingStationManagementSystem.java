@@ -74,7 +74,7 @@ public class ChargingStationManagementSystem {
 
         try {
             PowerBankManager manager = new PowerBankManager();
-            manager.addPowerBank(1,2, Status.AVAILABLE);
+            manager.addPowerBank(2, Status.AVAILABLE);
             ResultSet rs = manager.getPowerBank(1);
 
             // 展开结果集数据库

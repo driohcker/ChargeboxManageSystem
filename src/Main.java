@@ -1,7 +1,6 @@
 import PowerBankTypeManager.PowerBankTypeManager;
-import DealingManager.Rental_Dealing_Manager;
 import UserManager.UserManager;
-import PowerBankManager.PowerBankManager;
+
 import java.sql.SQLException;
 
 public class Main {
