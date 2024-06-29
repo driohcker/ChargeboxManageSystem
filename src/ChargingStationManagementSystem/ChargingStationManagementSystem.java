@@ -1,5 +1,8 @@
 package ChargingStationManagementSystem;
 
+import PowerBankManager.PowerBankManager;
+import PowerBankManager.*;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -8,10 +11,12 @@ import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 public class ChargingStationManagementSystem {
     private static JFrame frame;
@@ -21,8 +26,8 @@ public class ChargingStationManagementSystem {
     private static Map<String, String> users = new HashMap<>(); // 用户名-密码映射
     private static String currentUser;
     private static ChargingStationManager manager = new ChargingStationManager(); // 全局的manager
-
-    public static void main(String[] args) {
+    private static PowerBankManager manager1 = new  PowerBankManager();
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
         frame = new JFrame("充电宝租赁管理系统");
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
@@ -42,8 +47,14 @@ public class ChargingStationManagementSystem {
         // 示例数据
         manager.addPowerBankType("普通充电宝", 1.0);
         manager.addPowerBankType("快速充电宝", 1.5);
-        manager.addPowerBank("PB001", "普通充电宝");
-        manager.addPowerBank("PB002", "快速充电宝");
+
+
+
+        manager1.addPowerBank(1, 92, Status.AVAILABLE);
+
+
+
+
         manager.registerUser("user1", "pass1");
 
         // 显示登录界面
